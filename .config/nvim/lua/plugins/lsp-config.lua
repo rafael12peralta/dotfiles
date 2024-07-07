@@ -1,6 +1,7 @@
 return {
-{
+	{
 		"williamboman/mason.nvim",
+		lazy = false,
 		config = function()
 			require("mason").setup()
 		end,
@@ -10,6 +11,12 @@ return {
 		lazy = false,
 		opts = {
 			auto_install = true,
+      ensure_installed = {
+        "lua_ls",
+        "tsserver",
+        "html",
+        "cssls",
+      }
 		},
 	},
 	{
@@ -25,6 +32,12 @@ return {
 			lspconfig.tsserver.setup({
 				capabilities = capabilities,
 			})
+			lspconfig.html.setup({
+				capabilities = capabilities,
+			})
+      lspconfig.cssls.setup({
+        capabilities = capabilities,
+      })
 
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
 			vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
