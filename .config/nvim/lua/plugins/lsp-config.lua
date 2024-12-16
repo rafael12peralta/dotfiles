@@ -10,13 +10,14 @@ return {
 		"williamboman/mason-lspconfig.nvim",
 		lazy = false,
 		opts = {
-			auto_install = true,
-      ensure_installed = {
-        "lua_ls",
-        "ts_ls",
-        "html",
-        "cssls",
-      }
+			automatic_installation = true,
+			ensure_installed = {
+				"lua_ls",
+				"ts_ls",
+				"html",
+				"cssls",
+                "clangd",
+			},
 		},
 	},
 	{
@@ -35,9 +36,12 @@ return {
 			lspconfig.html.setup({
 				capabilities = capabilities,
 			})
-      lspconfig.cssls.setup({
-        capabilities = capabilities,
-      })
+			lspconfig.cssls.setup({
+				capabilities = capabilities,
+			})
+            lspconfig.clangd.setup({
+                capabilities = capabilities,
+            })
 
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
 			vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
