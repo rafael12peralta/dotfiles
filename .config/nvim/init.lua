@@ -1,15 +1,30 @@
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
-	vim.fn.system({
-		"git",
-		"clone",
-		"--filter=blob:none",
-		"https://github.com/folke/lazy.nvim.git",
-		"--branch=stable",
-		lazypath,
-	})
-end
-vim.opt.rtp:prepend(lazypath)
+require("config.lazy")
 
-require("vim-options")
-require("lazy").setup("plugins")
+vim.opt.shiftwidth = 2
+vim.opt.tabstop = 2
+
+vim.opt.number = true
+vim.opt.relativenumber = true
+
+vim.opt.clipboard = "unnamedplus"
+
+vim.g.mapleader = " "
+
+vim.opt.hlsearch = false
+
+vim.api.nvim_create_autocmd('TermOpen', {
+	group = vim.api.nvim_create_augroup('custom-term-open', { clear = true }),
+	callback = function()
+		vim.opt.number = false
+		vim.opt.relativenumber = false
+	end,
+})
+
+vim.keymap.set("n", "<space>st", function()
+	vim.cmd.vnew()
+	vim.cmd.term()
+	vim.cmd.wincmd("J")
+	vim.api.nvim_win_set_height(0, 5)
+end)
+
+vim.keymap.set("n", "-", "<cmd>Oil<CR>")
